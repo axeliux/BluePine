@@ -19,8 +19,8 @@ public class PeerConnection {
 	private SocketInterface socket;
 	
 	 public PeerConnection(PeerInfo info) throws IOException,UnknownHostException{
+		 System.out.println("Peer Connection constructor");
 		 this.peerInfo = info;
-		 
 		 this.socket = PeerSocketFactory.getSocketFactory().makeSocket(info.getHost(),info.getPort());
 	 }
 	 

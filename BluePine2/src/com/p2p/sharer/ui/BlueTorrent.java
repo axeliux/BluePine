@@ -6,6 +6,7 @@
 
 package com.p2p.sharer.ui;
 
+import java.net.Socket;
 import java.util.logging.Level;
 
 import com.p2p.core.PeerInfo;
@@ -158,9 +159,16 @@ public class BlueTorrent extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void initUI(){
+    	try{
     	System.out.println("Axel started");
     	LoggerUtil.getLogger().setLevel(Level.FINEST);
-    	this.initPeerNode("localhost", 5000, 5, new PeerInfo("localhost", 5001));
+    	
+    
+    	this.initPeerNode("localhost", 5005, 5, new PeerInfo("localhost", 5005));
+    	}catch(Exception ex){
+    		System.out.println(ex.getMessage());
+    		ex.printStackTrace();
+    	}
     	
     }
     private void initPeerNode(String initialHost, int initialPort,int maxPeers, PeerInfo myInfo){
