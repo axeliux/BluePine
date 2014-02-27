@@ -5,7 +5,6 @@ import java.net.UnknownHostException;
 
 import com.p2p.core.interfaces.SocketInterface;
 import com.p2p.core.socket.PeerSocketFactory;
-import com.p2p.core.socket.SocketFactory;
 import com.p2p.core.util.LoggerUtil;
 
 /**
@@ -21,6 +20,7 @@ public class PeerConnection {
 	
 	 public PeerConnection(PeerInfo info) throws IOException,UnknownHostException{
 		 this.peerInfo = info;
+		 
 		 this.socket = PeerSocketFactory.getSocketFactory().makeSocket(info.getHost(),info.getPort());
 	 }
 	 
@@ -34,6 +34,7 @@ public class PeerConnection {
 			 socket.write(message.toBytes());
 		 }catch(IOException ex){
 			 LoggerUtil.getLogger().warning("Error sending data: " + ex.getMessage());
+			 
 		 }
 	 }
 	 public P2PMessage recvData(){
