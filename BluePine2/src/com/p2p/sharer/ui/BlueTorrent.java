@@ -19,6 +19,7 @@ import com.p2p.sharer.handlers.ui.listeners.RefreshPeersListener;
 import com.p2p.sharer.handlers.ui.listeners.RemovePeerListener;
 import com.p2p.sharer.handlers.ui.listeners.SearchFileListener;
 import java.util.Scanner;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -26,6 +27,8 @@ import java.util.Scanner;
  */
 public class BlueTorrent extends javax.swing.JFrame {
 	public SharerNode peer;
+        private DefaultListModel peerListModel = new DefaultListModel();
+        private DefaultListModel fileListModel = new DefaultListModel();
     /**
      * Creates new form BlueTorrent
      */
@@ -194,6 +197,8 @@ public class BlueTorrent extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void initUI(){
     	try{
+            this.peerList.setModel(this.peerListModel);
+            
     	System.out.println("Axel started");
     	Scanner scanner = new Scanner(System.in);
         System.out.println("What's the default port:");
@@ -232,9 +237,19 @@ public class BlueTorrent extends javax.swing.JFrame {
         //this.peer.buildPeers(initialHost, initialPort, 2);
         
     }
-       public String getBuildPeer(){
+    public void updateFileList(){
+        
+    }
+    public void updatePeerList(){
+        this.peerListModel.removeAllElements();
+        for(String peerId: this.peer.getPeerKeys()){
+            this.peerListModel.addElement(peerId);
+        }
+    
+    }
+    public String getBuildPeer(){
            return this.buildPeerTxt.getText();
-       }
+    }
     private void addFileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFileBtnActionPerformed
         Router r = new Router(null);
         System.out.println("TEsting");

@@ -21,7 +21,8 @@ public class RefreshPeersListener extends BluePineListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.blueTorrent.updateFileList();
+	this.blueTorrent.updatePeerList();
     }
     
 }

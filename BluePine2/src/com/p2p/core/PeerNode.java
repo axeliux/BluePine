@@ -154,7 +154,8 @@ public class PeerNode {
     		ServerSocket socket = makeServerSocket(myInfo.getPort());
     		socket.setSoTimeout(SOCKET_TIMEOUT);
     		while(!this.shutdown){
-    			LoggerUtil.getLogger().fine("Listening...");
+                    
+    			LoggerUtil.getLogger().finest("Listening...");
     			try{
     				Socket client = socket.accept();
     				client.setSoTimeout(0);
@@ -239,7 +240,7 @@ public class PeerNode {
     		if(!handlers.containsKey(msg.getMsgType())){
     			LoggerUtil.getLogger().fine("Not handled: " + msg);
     		}else{
-    			LoggerUtil.getLogger().finer("Handling: " + msg);
+    			LoggerUtil.getLogger().info("Handling: " + msg);
     			handlers.get(msg.getMsgType()).handleMessage(connection, msg);
     		}
     		LoggerUtil.getLogger().fine("Disconnecting incoming: " + connection);
