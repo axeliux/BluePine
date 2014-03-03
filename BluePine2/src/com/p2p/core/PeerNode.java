@@ -25,7 +25,7 @@ import com.p2p.core.util.LoggerUtil;
 
 public class PeerNode {
 	private PeerInfo myInfo;
-	private static final int SOCKET_TIMEOUT = 2000; // 2 seconds
+	private static final int SOCKET_TIMEOUT = 5000; // 5 seconds
 	private int maxPeers;
 	private Hashtable<String,HandlerInterface> handlers;
 	private Hashtable<String,PeerInfo> peers;
@@ -162,7 +162,7 @@ public class PeerNode {
     				PeerHandler handler = new PeerHandler(client);
     				handler.start();
     			}catch(SocketTimeoutException te){
-    				LoggerUtil.getLogger().fine("" + te);
+    				LoggerUtil.getLogger().finest("" + te);
     				continue;
     			}
     		}
