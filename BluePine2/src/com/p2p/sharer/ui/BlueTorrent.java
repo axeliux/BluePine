@@ -22,9 +22,9 @@ import java.util.Scanner;
 import javax.swing.DefaultListModel;
 
 /**
- * @author  jose
- * @author axvelazq
  * @author jpizana
+ * @author axvelazq
+ * 
  */
 public class BlueTorrent extends javax.swing.JFrame {
 	public SharerNode peer;
