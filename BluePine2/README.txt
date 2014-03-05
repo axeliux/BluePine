@@ -1,6 +1,7 @@
 Peet to Peer Framework & Sharer App
 =======================================
 @author Axel Velazquez
+        José Pizaña
 
 Expected finish time : March 15th
 
