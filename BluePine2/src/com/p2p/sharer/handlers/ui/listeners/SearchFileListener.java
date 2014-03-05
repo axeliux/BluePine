@@ -6,6 +6,8 @@
 
 package com.p2p.sharer.handlers.ui.listeners;
 
+import com.p2p.core.P2PMessage;
+import com.p2p.sharer.SharerMessage;
 import com.p2p.sharer.ui.BlueTorrent;
 import java.awt.event.ActionEvent;
 
@@ -21,7 +23,15 @@ public class SearchFileListener extends BluePineListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String key = this.blueTorrent.getSearchFileText().trim();
+			for (String pid : this.blueTorrent.peer.getPeerKeys()) {
+				this.blueTorrent.peer.sendToPeer(pid, SharerMessage.QUERY,
+						this.blueTorrent.peer.getId() + " " + key + " 4",
+						true);
+			}
+
+			this.blueTorrent.getSearchTextArea().requestFocusInWindow();
+			this.blueTorrent.getSearchTextArea().setText("");
     }
     
 }

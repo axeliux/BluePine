@@ -6,6 +6,8 @@
 
 package com.p2p.sharer.handlers.ui.listeners;
 
+import com.p2p.core.P2PMessage;
+import com.p2p.sharer.SharerMessage;
 import com.p2p.sharer.ui.BlueTorrent;
 import java.awt.event.ActionEvent;
 
@@ -21,7 +23,12 @@ public class RemovePeerListener extends BluePineListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+       if (this.blueTorrent.peerList != null) {
+				String pid = this.blueTorrent.peerList.getSelectedValue().toString();
+				this.blueTorrent.peer.sendToPeer(pid,SharerMessage.PEER_QUIT, this.blueTorrent.peer.getId(), true);
+				this.blueTorrent.peer.removePeer(pid);
+			}
     }
     
 }

@@ -21,7 +21,13 @@ public class AddFileListener extends BluePineListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String filename = this.blueTorrent.getAddFile().trim();
+			if (!filename.equals("")) {
+				blueTorrent.peer.addLocalFile(filename);
+			}
+			blueTorrent.getFileTextArea().requestFocusInWindow();
+			blueTorrent.getFileTextArea().setText("");
+			blueTorrent.updateFileList();
     }
     
 }
