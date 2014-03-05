@@ -24,7 +24,7 @@ import javax.swing.DefaultListModel;
 /**
  *
  * @author axvelazq
- * @author jpizanga
+ * @author jpizana
  */
 public class BlueTorrent extends javax.swing.JFrame {
 	public SharerNode peer;
