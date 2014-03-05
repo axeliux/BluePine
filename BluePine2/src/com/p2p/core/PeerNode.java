@@ -215,9 +215,7 @@ public class PeerNode {
     public boolean maxPeerReached(){
     	return maxPeers > 0 && peers.size() == maxPeers;
     }
-    public String getInfo(){
-    	return myInfo.getId();
-    }
+
     public String getHost(){
     	return myInfo.getHost();
     }

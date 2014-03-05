@@ -10,14 +10,7 @@ import com.p2p.core.interfaces.SocketInterface;
  */
 public class PeerSocketFactory extends SocketFactory {
 
-	private static SocketFactory factory = new PeerSocketFactory();
 	
-	public static SocketFactory getSocketFactory(){
-		return factory;
-	}
-	public static void setSocketFactory(SocketFactory newFactory){
-		factory = newFactory;
-	}
 	@Override
 	public SocketInterface makeSocket(Socket socket)throws IOException {
 		return new PeerSocket(socket);

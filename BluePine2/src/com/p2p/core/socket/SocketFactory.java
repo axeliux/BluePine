@@ -10,12 +10,15 @@ import com.p2p.core.interfaces.SocketInterface;
  *
  */
 public abstract class SocketFactory {
-	protected SocketFactory factory;
+	private static SocketFactory factory = new PeerSocketFactory();
 	
-	//public abstract SocketFactory getSocketFactory();
+	public static SocketFactory getSocketFactory(){
+		return factory;
+	}
+	public static void setSocketFactory(SocketFactory newFactory){
+		factory = newFactory;
+	}
 	public abstract SocketInterface makeSocket(Socket socket)throws IOException;
 	public abstract SocketInterface makeSocket(String host, int port)throws IOException, UnknownHostException;
-	public static void setSocketFactory(SocketFactory factory){
-		
-	}
+
 }
