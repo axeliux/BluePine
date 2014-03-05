@@ -22,7 +22,7 @@ import java.util.Scanner;
 import javax.swing.DefaultListModel;
 
 /**
- *
+ * @author  jose
  * @author axvelazq
  * @author jpizana
  */
