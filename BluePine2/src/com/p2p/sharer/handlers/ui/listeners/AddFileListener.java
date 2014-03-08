@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 
 /**
  *f
- * @author axel
+ * @author axel.
  */
 public class AddFileListener extends BluePineListener {
 
