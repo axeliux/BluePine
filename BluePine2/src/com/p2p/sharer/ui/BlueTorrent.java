@@ -19,9 +19,9 @@ import com.p2p.sharer.handlers.ui.listeners.RebuildPeerListener;
 import com.p2p.sharer.handlers.ui.listeners.RefreshPeersListener;
 import com.p2p.sharer.handlers.ui.listeners.RemovePeerListener;
 import com.p2p.sharer.handlers.ui.listeners.SearchFileListener;
+import java.io.File;
 import java.util.Scanner;
 import javax.swing.DefaultListModel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -33,6 +33,7 @@ public class BlueTorrent extends javax.swing.JFrame {
 	public SharerNode peer;
         private DefaultListModel peerListModel = new DefaultListModel();
         private DefaultListModel filesModel = new DefaultListModel();
+        private DefaultListModel downloadModel = new DefaultListModel();
     /**
      * Creates new form BlueTorrent
      */
@@ -41,6 +42,10 @@ public class BlueTorrent extends javax.swing.JFrame {
         registerListeners();
         LoggerUtil.setHandlerLevel(Level.FINE);
         this.initUI();
+        this.fileList.setModel(this.filesModel);
+        this.peerList.setModel(this.peerListModel);
+        this.downloadList.setModel(this.downloadModel);
+        initWorkingDirectory();
     }
 
     /**
@@ -66,9 +71,10 @@ public class BlueTorrent extends javax.swing.JFrame {
         seachBtn = new javax.swing.JButton();
         buildPeerTxt = new javax.swing.JTextField();
         buildBtn = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        FileBrowser = new javax.swing.JTextArea();
         txtFileName = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        downloadList = new javax.swing.JList();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -99,6 +105,11 @@ public class BlueTorrent extends javax.swing.JFrame {
         });
 
         searchTxt.setText("Search File");
+        searchTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchTxtFocusGained(evt);
+            }
+        });
 
         seachBtn.setText("Search");
 
@@ -109,9 +120,9 @@ public class BlueTorrent extends javax.swing.JFrame {
             }
         });
 
-        FileBrowser.setColumns(20);
-        FileBrowser.setRows(5);
-        jScrollPane3.setViewportView(FileBrowser);
+        jScrollPane3.setViewportView(downloadList);
+
+        jLabel3.setText("Download files");
 
         jMenu1.setText("File");
 
@@ -137,41 +148,41 @@ public class BlueTorrent extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(fechbtn))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
+                        .addGap(42, 42, 42)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fechbtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 6, Short.MAX_VALUE)
+                        .addGap(0, 19, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtFileName)
-                                .addGap(18, 18, 18)
-                                .addComponent(addFileBtn)
-                                .addGap(323, 323, 323)
-                                .addComponent(RemoveBtn))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(seachBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(buildPeerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtFileName)))
+                    .addComponent(jScrollPane3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(seachBtn)
+                        .addGap(31, 31, 31)
+                        .addComponent(buildPeerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buildBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(addFileBtn)
+                        .addGap(302, 302, 302)
+                        .addComponent(RemoveBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RefreshBtn)
-                            .addComponent(buildBtn, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                        .addComponent(RefreshBtn))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,27 +197,30 @@ public class BlueTorrent extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fechbtn)
-                        .addGap(21, 21, 21)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(fechbtn)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(6, 6, 6)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(RemoveBtn)
-                        .addComponent(RefreshBtn)
-                        .addComponent(addFileBtn))
-                    .addComponent(txtFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addFileBtn)
+                    .addComponent(RemoveBtn)
+                    .addComponent(RefreshBtn))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(seachBtn)
                     .addComponent(buildPeerTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buildBtn))
-                .addContainerGap())
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -229,6 +243,21 @@ public class BlueTorrent extends javax.swing.JFrame {
     	}
     	
     }
+    private void initWorkingDirectory(){
+        try{
+        File download = new File("download");
+        File myfiles = new File("sharedFiles");
+            if(!download.exists()){
+                download.mkdir();
+            }
+            if(!myfiles.exists()){
+                myfiles.mkdir();
+            }
+        }catch(Exception ex){
+            LoggerUtil.getLogger().log(Level.SEVERE,ex.getMessage());
+        }
+    }
+            
     private void registerListeners(){
         this.buildBtn.addActionListener(new RebuildPeerListener(this));
         this.addFileBtn.addActionListener(new AddFileListener(this));
@@ -257,7 +286,29 @@ public class BlueTorrent extends javax.swing.JFrame {
         this.peer.buildPeers(initialHost, initialPort, 2);
         
     }
+    private void initFiles(){
+
+        File myfiles = new File("sharedFiles");
+        if(myfiles.exists()){
+            System.out.println(myfiles.getAbsolutePath());
+            String files[] =myfiles.list();
+            for(String file : files){
+                if(!peer.getTableFiles().containsKey(file)){
+                    peer.getTableFiles().put(file, peer.getId());
+                }
+            }
+        }
+        File download = new File("download");
+        downloadModel.removeAllElements();
+        if(download.exists()){
+            String files [] = download.list();
+            for(String f: files){
+                downloadModel.addElement(f);
+            }
+        }
+    }
     public void updateFileList(){
+        initFiles();
         filesModel.removeAllElements();
 		for (String filename : peer.getFileNames()) {
 			String pid = peer.getFileOwner(filename);
@@ -303,6 +354,11 @@ public class BlueTorrent extends javax.swing.JFrame {
         
     }//GEN-LAST:event_buildBtnActionPerformed
 
+    private void searchTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchTxtFocusGained
+        // TODO add your handling code here:
+        this.searchTxt.setText("");
+    }//GEN-LAST:event_searchTxtFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -339,16 +395,17 @@ public class BlueTorrent extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea FileBrowser;
     private javax.swing.JButton RefreshBtn;
     private javax.swing.JButton RemoveBtn;
     private javax.swing.JButton addFileBtn;
     private javax.swing.JButton buildBtn;
     private javax.swing.JTextField buildPeerTxt;
+    private javax.swing.JList downloadList;
     private javax.swing.JButton fechbtn;
     public javax.swing.JList fileList;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;

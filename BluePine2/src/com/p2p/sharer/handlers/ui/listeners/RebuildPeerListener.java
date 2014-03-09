@@ -10,7 +10,7 @@ import com.p2p.core.util.LoggerUtil;
 import com.p2p.sharer.ui.BlueTorrent;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *

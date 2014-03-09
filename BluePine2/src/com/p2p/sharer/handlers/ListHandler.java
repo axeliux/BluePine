@@ -21,7 +21,8 @@ public class ListHandler extends PeerHandler {
 	public void handleMessage(PeerConnection conn, P2PMessage message) {
 		PeerNode peer = this.getInstanceNode();
 		conn.sendData(new P2PMessage(SharerMessage.REPLY,String.format("%d",peer.getNumberPeers())));
-		for(String pid : peer.getPeerKeys()){
+		
+                for(String pid : peer.getPeerKeys()){
 			String host = peer.getPeer(pid).getHost();
 			int port = peer.getPeer(pid).getPort();
 			conn.sendData(new P2PMessage(SharerMessage.REPLY,String.format("%s %s %d",pid,host,port)));

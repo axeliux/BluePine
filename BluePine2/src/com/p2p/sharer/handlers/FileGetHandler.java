@@ -36,7 +36,7 @@ public class FileGetHandler extends PeerHandler{
 		 
 		 byte [] filedata = null;
 		 try{
-			FileInputStream inFile = new FileInputStream(filename);
+			FileInputStream inFile = new FileInputStream("sharedFiles/" +filename);
 			int length = inFile.available();
 			filedata = new byte[length];
 			inFile.read(filedata);

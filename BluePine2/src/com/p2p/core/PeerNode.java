@@ -231,11 +231,13 @@ public class PeerNode {
     	public PeerHandler(Socket s) throws IOException{
     		socket = PeerSocketFactory.getSocketFactory().makeSocket(s);
     	}
+        @Override
     	public void run(){
     		LoggerUtil.getLogger().fine("New Peer Handler");
     		PeerConnection connection = new PeerConnection(null,socket);
     		P2PMessage msg =connection.recvData();
-    		if(!handlers.containsKey(msg.getMsgType())){
+                String messageType = msg.getMsgType();
+    		if(!handlers.containsKey(messageType)){
     			LoggerUtil.getLogger().fine("Not handled: " + msg);
     		}else{
     			LoggerUtil.getLogger().info("Handling: " + msg);

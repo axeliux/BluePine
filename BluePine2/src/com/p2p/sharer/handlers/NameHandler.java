@@ -20,13 +20,9 @@ public class NameHandler extends PeerHandler {
 	@Override
 	public void handleMessage(PeerConnection conn, P2PMessage message) {
 		PeerNode peer = this.getInstanceNode();
-		conn.sendData(new P2PMessage(SharerMessage.REPLY,String.format("%d",peer.getNumberPeers())));
-		for(String pid : peer.getPeerKeys()){
-			String host = peer.getPeer(pid).getHost();
-			int port = peer.getPeer(pid).getPort();
-			conn.sendData(new P2PMessage(SharerMessage.REPLY,String.format("%s %s %d",pid,host,port)));
-		}
-		
+		conn.sendData(new P2PMessage(SharerMessage.REPLY,peer.getId()));
+                
+				
 	}
 
 }

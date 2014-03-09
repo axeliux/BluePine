@@ -4,7 +4,7 @@ import com.p2p.core.P2PMessage;
 import com.p2p.core.PeerConnection;
 
 /**
- * Handles a new incomming connection from a peer.
+ * Handles a new incoming connection from a peer.
  * @author axvelazq
  *
  */

@@ -42,7 +42,7 @@ public class FechListener extends BluePineListener {
 				LoggerUtil.getLogger().fine("FETCH RESPONSE TYPE: " + resplist.get(0).getMsgType());
 				if (resplist.size() > 0 && resplist.get(0).getMsgType().equals(SharerMessage.REPLY)) {
 					try {
-						FileOutputStream outfile = new FileOutputStream(filename);
+						FileOutputStream outfile = new FileOutputStream("download/"+filename);
 						outfile.write(resplist.get(0).getMsgDataBytes());
 						outfile.close();
 						this.blueTorrent.peer.addLocalFile(filename);
