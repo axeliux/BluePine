@@ -235,7 +235,7 @@ public class BlueTorrent extends javax.swing.JFrame {
         System.out.println("What's the default port:");
         int port = scanner.nextInt();
         System.out.println(InetAddress.getLocalHost().getHostName());
-    	this.initPeerNode("localhost", 80, 5, new PeerInfo(InetAddress.getLocalHost().getHostName(), port));
+    	this.initPeerNode("localhost", port, 5, new PeerInfo(InetAddress.getLocalHost().getHostName(), port));
         
         
     	}catch(Exception ex){
@@ -280,8 +280,8 @@ public class BlueTorrent extends javax.swing.JFrame {
             });
         t.start();
         
-        	new javax.swing.Timer(3000, new RefreshPeersListener(this)).start();
-		peer.startStabilizer(new SimplePingStabilizer(peer), 3000);
+        	new javax.swing.Timer(5000, new RefreshPeersListener(this)).start();
+		peer.startStabilizer(new SimplePingStabilizer(peer), 5000);
                 
         this.setTitle(myInfo.toString());
         this.peer.buildPeers(initialHost, initialPort, 2);

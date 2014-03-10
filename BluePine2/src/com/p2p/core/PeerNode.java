@@ -155,7 +155,7 @@ public class PeerNode {
     		socket.setSoTimeout(SOCKET_TIMEOUT);
     		while(!this.shutdown){
                     
-    			LoggerUtil.getLogger().finest("Listening...");
+    			LoggerUtil.getLogger().info("Listening...");
     			try{
     				Socket client = socket.accept();
     				client.setSoTimeout(0);
@@ -163,7 +163,7 @@ public class PeerNode {
     				PeerHandler handler = new PeerHandler(client);
     				handler.start();
     			}catch(SocketTimeoutException te){
-    				LoggerUtil.getLogger().finest("" + te);
+    				LoggerUtil.getLogger().info("" + te);
     				continue;
     			}
     		}
