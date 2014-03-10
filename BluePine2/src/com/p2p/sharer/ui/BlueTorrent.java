@@ -20,6 +20,7 @@ import com.p2p.sharer.handlers.ui.listeners.RefreshPeersListener;
 import com.p2p.sharer.handlers.ui.listeners.RemovePeerListener;
 import com.p2p.sharer.handlers.ui.listeners.SearchFileListener;
 import java.io.File;
+import java.net.InetAddress;
 import java.util.Scanner;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
@@ -233,8 +234,8 @@ public class BlueTorrent extends javax.swing.JFrame {
     	Scanner scanner = new Scanner(System.in);
         System.out.println("What's the default port:");
         int port = scanner.nextInt();
-        
-    	this.initPeerNode("localhost", port, 5, new PeerInfo("localhost", port));
+        System.out.println(InetAddress.getLocalHost().getHostName());
+    	this.initPeerNode("localhost", 80, 5, new PeerInfo(InetAddress.getLocalHost().getHostName(), port));
         
         
     	}catch(Exception ex){
@@ -290,7 +291,7 @@ public class BlueTorrent extends javax.swing.JFrame {
 
         File myfiles = new File("sharedFiles");
         if(myfiles.exists()){
-            System.out.println(myfiles.getAbsolutePath());
+           
             String files[] =myfiles.list();
             for(String file : files){
                 if(!peer.getTableFiles().containsKey(file)){
@@ -342,7 +343,7 @@ public class BlueTorrent extends javax.swing.JFrame {
     }
     private void addFileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFileBtnActionPerformed
         Router r = new Router(null);
-        System.out.println("TEsting");
+        
     }//GEN-LAST:event_addFileBtnActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
